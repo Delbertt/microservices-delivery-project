@@ -1,6 +1,5 @@
 package com.arthlnx.deliveryproj.delivery.tracking.domain.service;
 
-import com.arthlnx.deliveryproj.delivery.tracking.api.model.DeliveryDto;
 import com.arthlnx.deliveryproj.delivery.tracking.domain.exception.DomainException;
 import com.arthlnx.deliveryproj.delivery.tracking.domain.model.Delivery;
 import com.arthlnx.deliveryproj.delivery.tracking.domain.repository.DeliveryRepository;

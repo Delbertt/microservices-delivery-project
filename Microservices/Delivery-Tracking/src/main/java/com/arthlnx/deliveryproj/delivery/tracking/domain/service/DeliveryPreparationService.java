@@ -1,8 +1,8 @@
 package com.arthlnx.deliveryproj.delivery.tracking.domain.service;
 
-import com.arthlnx.deliveryproj.delivery.tracking.api.model.ContactPointDto;
-import com.arthlnx.deliveryproj.delivery.tracking.api.model.DeliveryDto;
-import com.arthlnx.deliveryproj.delivery.tracking.api.model.ItemDto;
+import com.arthlnx.deliveryproj.delivery.tracking.api.modelDto.ContactPointDto;
+import com.arthlnx.deliveryproj.delivery.tracking.api.modelDto.DeliveryDto;
+import com.arthlnx.deliveryproj.delivery.tracking.api.modelDto.ItemDto;
 import com.arthlnx.deliveryproj.delivery.tracking.domain.exception.DomainException;
 import com.arthlnx.deliveryproj.delivery.tracking.domain.model.ContactPoint;
 import com.arthlnx.deliveryproj.delivery.tracking.domain.model.Delivery;

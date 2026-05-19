@@ -1,4 +1,4 @@
-package com.arthlnx.deliveryproj.delivery.tracking.api.model;
+package com.arthlnx.deliveryproj.delivery.tracking.api.modelDto;
 
 import lombok.Getter;
 import lombok.Setter;

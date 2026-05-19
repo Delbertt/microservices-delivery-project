@@ -1,7 +1,7 @@
 package com.arthlnx.deliveryproj.delivery.tracking.api.controller;
 
-import com.arthlnx.deliveryproj.delivery.tracking.api.model.CourierDto;
-import com.arthlnx.deliveryproj.delivery.tracking.api.model.DeliveryDto;
+import com.arthlnx.deliveryproj.delivery.tracking.api.modelDto.CourierDto;
+import com.arthlnx.deliveryproj.delivery.tracking.api.modelDto.DeliveryDto;
 import com.arthlnx.deliveryproj.delivery.tracking.domain.model.Delivery;
 import com.arthlnx.deliveryproj.delivery.tracking.domain.repository.DeliveryRepository;
 import com.arthlnx.deliveryproj.delivery.tracking.domain.service.DeliveryCheckpointService;

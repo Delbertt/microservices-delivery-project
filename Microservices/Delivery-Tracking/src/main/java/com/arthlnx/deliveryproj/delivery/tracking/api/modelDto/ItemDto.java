@@ -1,4 +1,4 @@
-package com.arthlnx.deliveryproj.delivery.tracking.api.model;
+package com.arthlnx.deliveryproj.delivery.tracking.api.modelDto;
 
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
