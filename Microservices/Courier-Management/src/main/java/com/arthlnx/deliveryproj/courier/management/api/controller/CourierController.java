@@ -1,8 +1,11 @@
 package com.arthlnx.deliveryproj.courier.management.api.controller;
 
 import com.arthlnx.deliveryproj.courier.management.api.modelDto.CourierDto;
+import com.arthlnx.deliveryproj.courier.management.api.modelDto.CourierPayoutCalculationDto;
+import com.arthlnx.deliveryproj.courier.management.api.modelDto.CourierPayoutResultModel;
 import com.arthlnx.deliveryproj.courier.management.domain.model.Courier;
 import com.arthlnx.deliveryproj.courier.management.domain.repository.CourierRepository;
+import com.arthlnx.deliveryproj.courier.management.domain.service.CourierPayoutService;
 import com.arthlnx.deliveryproj.courier.management.domain.service.CourierRegistrationService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -13,6 +16,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.math.BigDecimal;
 import java.util.UUID;
 
 @RestController
@@ -21,6 +25,8 @@ import java.util.UUID;
 public class CourierController {
     private final CourierRepository courierRepository;
     private final CourierRegistrationService courierRegistrationService;
+
+    private CourierPayoutService courierPayoutService;
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
@@ -47,5 +53,13 @@ public class CourierController {
                         HttpStatus.NOT_FOUND,
                         "Courier with id " + courierId + " not found")
         );
+    }
+
+    @PostMapping("/payout-calculation")
+    public CourierPayoutResultModel calculate (
+            @RequestBody CourierPayoutCalculationDto courierPayoutCalculationDto) {
+        BigDecimal payoutFee = courierPayoutService
+                .calculate(courierPayoutCalculationDto.getDistanceKm());
+        return new CourierPayoutResultModel(payoutFee);
     }
 }

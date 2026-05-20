@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
-import java.time.Duration;
+import java.math.RoundingMode;
 import java.util.UUID;
 
 @Service
@@ -20,6 +20,9 @@ import java.util.UUID;
 public class DeliveryPreparationService {
 
     private final DeliveryRepository deliveryRepository;
+
+    private final DeliveryTimeEstimationService deliveryTimeEstimationService;
+    private final CourierPayoutCalcService courierPayoutCalcService;
 
     @Transactional
     public Delivery draft(DeliveryDto deliveryDto) {
@@ -63,16 +66,18 @@ public class DeliveryPreparationService {
                 .street(recipientDto.getStreet())
                 .build();
 
-        Duration expectedDeliveryTime = Duration.ofHours(3);
-        BigDecimal distanceFee = new BigDecimal("10");
+        DeliveryEstimate estimate = deliveryTimeEstimationService
+                .estimate(sender, recipient);
+        BigDecimal calculatePayout = courierPayoutCalcService
+                .calculateCourierPayout(estimate.getDistanceKm());
+        BigDecimal distanceFee = calculateFee(estimate.getDistanceKm());
 
-        BigDecimal payout = new BigDecimal("10");
 
         var preparationDetails = Delivery.PreparationDetails.builder()
                 .recipient(recipient)
                 .sender(sender)
-                .expectedDeliveredAt(expectedDeliveryTime)
-                .courierPayout(payout)
+                .expectedDeliveredAt(estimate.getEstimatedTime())
+                .courierPayout(calculatePayout)
                 .distanceFee(distanceFee)
                 .build();
 
@@ -81,5 +86,11 @@ public class DeliveryPreparationService {
         for (ItemDto itemDto : deliveryDto.getItems()) {
             delivery.addItem(itemDto.getName(), itemDto.getQuantity());
         }
+    }
+
+    private BigDecimal calculateFee(Double distanceKm) {
+        return new BigDecimal(distanceKm)
+                .multiply(new BigDecimal(3)
+                .setScale(2, RoundingMode.HALF_EVEN));
     }
 }
