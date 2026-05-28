@@ -16,7 +16,7 @@ import java.util.UUID;
 @Entity
 @Getter
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
-@NoArgsConstructor(access = AccessLevel.PRIVATE)
+@NoArgsConstructor(access = AccessLevel.PACKAGE)
 @Setter(AccessLevel.PRIVATE)
 public class Courier {
 
