@@ -1,8 +1,12 @@
 package com.arthlnx.deliveryproj.delivery.tracking.domain.model;
 
+import com.arthlnx.deliveryproj.delivery.tracking.domain.event.DeliveryFullfiledEvent;
+import com.arthlnx.deliveryproj.delivery.tracking.domain.event.DeliveryPickedUpEvent;
+import com.arthlnx.deliveryproj.delivery.tracking.domain.event.DeliveryPlacedEvent;
 import com.arthlnx.deliveryproj.delivery.tracking.domain.exception.DomainException;
 import jakarta.persistence.*;
 import lombok.*;
+import org.springframework.data.domain.AbstractAggregateRoot;
 
 import java.math.BigDecimal;
 import java.time.Duration;
@@ -14,10 +18,10 @@ import java.util.UUID;
 
 @Entity
 @NoArgsConstructor(access = AccessLevel.PACKAGE)
-@EqualsAndHashCode(onlyExplicitlyIncluded = true)
+@EqualsAndHashCode(onlyExplicitlyIncluded = true, callSuper = false)
 @Setter(AccessLevel.PRIVATE)
 @Getter
-public class Delivery {
+public class Delivery extends AbstractAggregateRoot<Delivery> {
     @Id
     @EqualsAndHashCode.Include
     private UUID id;
@@ -119,17 +123,35 @@ public class Delivery {
         this.verifyIfCanBePlaced();
         this.changeStatusTo(DeliveryStatus.WAITING_FOR_COURIER);
         this.setPlacedAt(OffsetDateTime.now());
+
+        super.registerEvent(
+                new DeliveryPlacedEvent(
+                        this.getPlacedAt(),
+                        this.getId())
+        );
     }
 
     public void pickup(UUID courierId) {
         this.setCourierId(courierId);
         this.changeStatusTo(DeliveryStatus.IN_TRANSIT);
         this.setAssignedAt(OffsetDateTime.now());
+
+        super.registerEvent(
+                new DeliveryPickedUpEvent(
+                        this.getPlacedAt(),
+                        this.getId())
+        );
     }
 
     public void markDelivered() {
         this.changeStatusTo(DeliveryStatus.DELIVERED);
         this.setAssignedAt(OffsetDateTime.now());
+
+        super.registerEvent(
+                new DeliveryFullfiledEvent(
+                        this.getFullFilledAt(),
+                        this.getId())
+        );
     }
 
     public List<Item> getItems() {
