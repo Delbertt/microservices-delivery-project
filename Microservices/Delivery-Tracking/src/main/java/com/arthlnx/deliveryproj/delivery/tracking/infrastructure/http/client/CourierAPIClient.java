@@ -8,6 +8,6 @@ import org.springframework.web.service.annotation.PostExchange;
 public interface CourierAPIClient {
 
     @PostExchange("/payout-calculation")
-    CourierPayoutResultModel payoutCalculation(
+    CourierPayoutResultDto payoutCalculation(
             @RequestBody CourierPayoutCalculationDto courierPayoutCalcDto);
 }
