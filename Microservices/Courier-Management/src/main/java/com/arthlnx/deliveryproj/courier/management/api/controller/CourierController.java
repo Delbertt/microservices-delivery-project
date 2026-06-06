@@ -26,7 +26,7 @@ public class CourierController {
     private final CourierRepository courierRepository;
     private final CourierRegistrationService courierRegistrationService;
 
-    private CourierPayoutService courierPayoutService;
+    private final CourierPayoutService courierPayoutService;
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)

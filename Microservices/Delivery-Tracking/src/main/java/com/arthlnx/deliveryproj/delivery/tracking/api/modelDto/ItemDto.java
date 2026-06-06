@@ -12,7 +12,6 @@ public class ItemDto {
     @NotBlank
     private String name;
 
-    @NotBlank
     @Min(1)
     private Integer quantity;
 }

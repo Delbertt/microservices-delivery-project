@@ -18,7 +18,7 @@ public enum DeliveryStatus {
 
     public boolean canNotChangeTo(DeliveryStatus newStatus) {
         DeliveryStatus current = this;
-        return !newStatus.previousStatuses.contains(current);
+        return newStatus.previousStatuses.contains(current);
     }
 
     public boolean canChangeTo(DeliveryStatus newStatus) {
