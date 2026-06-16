@@ -5,7 +5,6 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import lombok.*;
-import org.hibernate.validator.cfg.defs.UUIDDef;
 
 import java.time.OffsetDateTime;
 import java.util.ArrayList;
@@ -61,7 +60,7 @@ public class Courier {
         this.pendingDeliveriesQuantity++;
     }
 
-    public void fullfilled(UUID deliveryID) {
+    public void fulfilled(UUID deliveryID) {
         AssignedDelivery delivery = this.pendingDeliveries.stream().filter(
                 d -> d.getId().equals(deliveryID)
         ).findFirst().orElseThrow();
