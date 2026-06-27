@@ -19,3 +19,11 @@ spring:
           delivery-placed-event:com.arthlnx.deliveryproj.delivery.tracking.domain.event.DeliveryPlacedEvent,
           delivery-picked-up-event:com.arthlnx.deliveryproj.delivery.tracking.domain.event.DeliveryPickedUpEvent,
           delivery-fullfiled-event:com.arthlnx.deliveryproj.delivery.tracking.domain.event.DeliveryFullfiledEvent
+
+eureka:
+  client:
+    server-url:
+      default-zone: http//localhost:8761/eureka
+  instance:
+    instance-id: ${random.value}
+    prefer-ip-address: true
